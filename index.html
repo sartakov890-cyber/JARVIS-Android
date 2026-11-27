@@ -4,115 +4,197 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JARVIS 2.0</title>
+<meta name="theme-color" content="#030914">
+<title>JARVIS 3.0</title>
 
 <style>
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
   min-height: 100vh;
-  background: radial-gradient(circle at center, #102d49, #030914 70%);
-  color: #dff8ff;
+  background:
+    radial-gradient(ellipse at 50% 35%, #103d59 0%, #071525 42%, #020711 100%);
+  color: #dffaff;
   font-family: Arial, sans-serif;
   text-align: center;
   padding: 20px;
 }
 
 h1 {
-  color: #39d9ff;
-  letter-spacing: 7px;
-  text-shadow: 0 0 20px #00aaff;
-  margin-top: 25px;
+  margin: 22px 0 5px;
+  color: #64eaff;
+  font-size: 34px;
+  letter-spacing: 9px;
+  text-shadow: 0 0 22px #00bfff;
 }
 
 .subtitle {
-  color: #6caecb;
-  letter-spacing: 3px;
-  font-size: 12px;
+  color: #74aeca;
+  font-size: 11px;
+  letter-spacing: 4px;
 }
 
 .reactor {
-  width: 190px;
-  height: 190px;
-  margin: 45px auto 30px;
-  border: 3px solid #24caff;
-  border-radius: 50%;
+  width: 220px;
+  height: 220px;
+  margin: 35px auto;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 25px #008cff,
+  border-radius: 50%;
+  border: 2px solid #35dfff;
+  box-shadow: 0 0 20px #00aaff,
               inset 0 0 25px #008cff;
-  animation: pulse 2s infinite;
+  animation: reactorPulse 3s infinite ease-in-out;
+}
+
+.reactor::before,
+.reactor::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid #159cc8;
+}
+
+.reactor::before {
+  inset: 12px;
+  border-style: dashed;
+  animation: rotate 18s linear infinite;
+}
+
+.reactor::after {
+  inset: 28px;
+  border-color: #57eaff;
+  animation: rotate 12s linear infinite reverse;
 }
 
 .core {
-  width: 90px;
-  height: 90px;
+  width: 78px;
+  height: 78px;
+  background: radial-gradient(circle, #ffffff, #6cecff 35%, #008cff 75%);
   border-radius: 50%;
-  background: #35dfff;
-  box-shadow: 0 0 45px #00bfff;
-  animation: core 3s infinite alternate;
+  box-shadow: 0 0 25px #00cfff,
+              0 0 65px #008cff;
+  z-index: 2;
+  animation: corePulse 2s infinite alternate;
 }
 
-@keyframes pulse {
-  50% { transform: scale(1.08); opacity: .7; }
+@keyframes rotate {
+  to { transform: rotate(360deg); }
 }
 
-@keyframes core {
-  to { box-shadow: 0 0 65px #00eaff; }
+@keyframes reactorPulse {
+  50% { transform: scale(1.035); }
+}
+
+@keyframes corePulse {
+  to { box-shadow: 0 0 45px #00eaff, 0 0 85px #008cff; }
+}
+
+body.listening .reactor {
+  border-color: #a1ffff;
+  box-shadow: 0 0 35px #00eaff, inset 0 0 35px #00cfff;
+}
+
+body.listening .core {
+  animation-duration: .5s;
 }
 
 .panel {
+  width: 100%;
   max-width: 500px;
-  margin: 20px auto;
-  padding: 18px;
-  background: rgba(8, 29, 49, .85);
-  border: 1px solid #12618a;
-  border-radius: 16px;
-  box-shadow: 0 0 20px #003c60;
+  margin: 16px auto;
+  padding: 19px;
+  background: rgba(5, 23, 42, .83);
+  border: 1px solid rgba(54, 206, 255, .45);
+  border-radius: 18px;
+  box-shadow: 0 0 24px rgba(0, 149, 255, .12);
+  backdrop-filter: blur(12px);
 }
 
-#status {
-  color: #42dfff;
-  margin: 20px;
+.status {
+  color: #50e4ff;
+  font-size: 14px;
+  letter-spacing: 2px;
+  margin: 18px;
+}
+
+.indicator {
+  color: #8bcfe5;
+  font-size: 12px;
+  margin: 10px;
+  letter-spacing: 1px;
+}
+
+.dot {
+  color: #37eaff;
+}
+
+button {
+  background: linear-gradient(135deg, #075079, #06304d);
+  border: 1px solid #36d8ff;
+  border-radius: 12px;
+  color: white;
+  padding: 14px 18px;
+  margin: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+button:active {
+  transform: scale(.96);
+  background: #087eae;
+}
+
+.primary {
+  background: linear-gradient(135deg, #087eae, #075079);
 }
 
 input {
   width: 100%;
   padding: 15px;
-  margin: 8px 0;
-  border-radius: 10px;
-  border: 1px solid #20caff;
-  background: #08182a;
+  margin: 12px 0;
+  border: 1px solid #28bde9;
+  border-radius: 11px;
+  background: #06172a;
   color: white;
   font-size: 16px;
+  outline: none;
 }
 
-button {
-  background: #07375a;
-  color: white;
-  border: 1px solid #20caff;
-  border-radius: 10px;
-  padding: 13px 18px;
-  margin: 5px;
-  font-size: 15px;
-}
-
-button:active {
-  background: #087eae;
+input:focus {
+  border-color: #7ceeff;
+  box-shadow: 0 0 12px #008cff;
 }
 
 #answer {
-  min-height: 60px;
-  line-height: 1.5;
-  color: #c5f3ff;
+  min-height: 65px;
+  color: #d4f7ff;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
 }
 
-.indicator {
-  color: #35dfff;
-  font-size: 13px;
-  margin: 8px;
+h3 {
+  color: #56dcff;
+  letter-spacing: 2px;
+  font-size: 15px;
+}
+
+.footer {
+  color: #527d94;
+  font-size: 10px;
+  letter-spacing: 2px;
+  margin: 30px 0 10px;
+}
+
+.small {
+  font-size: 11px;
+  color: #77a9bd;
 }
 
 </style>
@@ -121,52 +203,99 @@ button:active {
 <body>
 
 <h1>J.A.R.V.I.S.</h1>
-<p class="subtitle">PERSONAL AI ASSISTANT 2.0</p>
+<p class="subtitle">ADVANCED PERSONAL ASSISTANT</p>
 
 <div class="reactor">
   <div class="core"></div>
 </div>
 
-<p id="status">SYSTEM ONLINE</p>
-
-<div class="panel">
-  <p class="indicator">● SYSTEM STATUS: OPERATIONAL</p>
-  <p class="indicator">● VOICE MODULE: READY</p>
-  <p class="indicator">● AI MODULE: LOCAL COMMANDS</p>
+<div class="status" id="status">
+  SYSTEM ONLINE
 </div>
 
 <div class="panel">
-  <button onclick="startListening()">🎤 SPRACHSTEUERUNG</button>
-  <button onclick="stopSpeaking()">⏹ STOPP</button>
+  <p class="indicator"><span class="dot">●</span> SYSTEM STATUS: OPERATIONAL</p>
+  <p class="indicator"><span class="dot">●</span> VOICE MODULE: READY</p>
+  <p class="indicator"><span class="dot">●</span> AI MODULE: LOCAL MODE</p>
+</div>
 
-  <input id="command"
-    placeholder="Schreibe einen Befehl ...">
+<div class="panel">
+  <h3>SPRACHSTEUERUNG</h3>
 
-  <button onclick="sendCommand()">SENDEN</button>
+  <button class="primary" onclick="startListening()">
+    🎤 JARVIS ZUHÖREN
+  </button>
+
+  <button onclick="stopSpeaking()">
+    ⏹ STOPP
+  </button>
+
+  <input
+    id="command"
+    placeholder="Schreibe einen Befehl..."
+    autocomplete="off"
+  >
+
+  <button class="primary" onclick="sendCommand()">
+    SENDEN
+  </button>
+
+  <p class="small" id="heard"></p>
 </div>
 
 <div class="panel">
   <h3>JARVIS MELDUNG</h3>
   <div id="answer">
     Willkommen zurück. Alle Systeme sind bereit.
+    Wie kann ich Ihnen helfen?
   </div>
 </div>
 
+<div class="panel">
+  <h3>VERFÜGBARE FUNKTIONEN</h3>
+  <p class="indicator">● Uhrzeit und Datum</p>
+  <p class="indicator">● YouTube öffnen</p>
+  <p class="indicator">● Google-Suche</p>
+  <p class="indicator">● Wetter-Suche</p>
+  <p class="indicator">● Taschenrechner</p>
+  <p class="indicator">● Sprachsteuerung</p>
+</div>
+
+<p class="footer">JARVIS 3.0 · LOCAL EDITION</p>
+
 <script>
+
 const statusText = document.getElementById("status");
 const answer = document.getElementById("answer");
+const heard = document.getElementById("heard");
+const input = document.getElementById("command");
+
+let recognition = null;
+let listening = false;
 
 function speak(text) {
   answer.textContent = text;
 
-  if (!("speechSynthesis" in window)) return;
+  if (!("speechSynthesis" in window)) {
+    return;
+  }
 
   speechSynthesis.cancel();
 
   const speech = new SpeechSynthesisUtterance(text);
   speech.lang = "de-DE";
-  speech.rate = 0.96;
+  speech.rate = 0.94;
   speech.pitch = 0.88;
+  speech.volume = 1;
+
+  const voices = speechSynthesis.getVoices();
+  const germanVoice = voices.find(v =>
+    v.lang.toLowerCase().startsWith("de")
+  );
+
+  if (germanVoice) {
+    speech.voice = germanVoice;
+  }
 
   speechSynthesis.speak(speech);
 }
@@ -175,52 +304,178 @@ function stopSpeaking() {
   if ("speechSynthesis" in window) {
     speechSynthesis.cancel();
   }
+
   answer.textContent = "Sprachausgabe gestoppt.";
+  statusText.textContent = "SYSTEM ONLINE";
+}
+
+function openPage(url) {
+  window.open(url, "_blank");
+}
+
+function calculate(command) {
+  const match = command.match(
+    /(?:was ist|rechne|berechne)?\s*(-?\d+(?:[.,]\d+)?)\s*(plus|addiert|minus|mal|multipliziert|geteilt durch|durch)\s*(-?\d+(?:[.,]\d+)?)/i
+  );
+
+  if (!match) return null;
+
+  const a = Number(match[1].replace(",", "."));
+  const b = Number(match[3].replace(",", "."));
+
+  let result;
+
+  switch (match[2].toLowerCase()) {
+    case "plus":
+    case "addiert":
+      result = a + b;
+      break;
+
+    case "minus":
+      result = a - b;
+      break;
+
+    case "mal":
+    case "multipliziert":
+      result = a * b;
+      break;
+
+    case "geteilt durch":
+    case "durch":
+      if (b === 0) return "Durch null kann ich nicht teilen.";
+      result = a / b;
+      break;
+  }
+
+  if (!Number.isFinite(result)) return null;
+
+  return "Das Ergebnis ist " + result + ".";
 }
 
 function processCommand(command) {
-  command = command.toLowerCase();
+  command = command.toLowerCase().trim();
 
-  if (command.includes("hallo") ||
-      command.includes("hey jarvis")) {
-    speak("Guten Tag. JARVIS ist bereit.");
+  heard.textContent = "Erkannt: " + command;
+
+  if (!command) return;
+
+  if (
+    command.includes("hallo") ||
+    command.includes("hey jarvis") ||
+    command.includes("guten morgen") ||
+    command.includes("guten tag")
+  ) {
+    speak("Guten Tag. Schön, dass Sie wieder da sind. Was kann ich für Sie tun?");
   }
 
-  else if (command.includes("wie spät")) {
+  else if (
+    command.includes("wie spät") ||
+    command.includes("uhrzeit")
+  ) {
     speak("Es ist " +
-      new Date().toLocaleTimeString("de-DE") + " Uhr.");
+      new Date().toLocaleTimeString("de-DE", {
+        hour: "2-digit",
+        minute: "2-digit"
+      }) + " Uhr.");
   }
 
-  else if (command.includes("datum")) {
-    speak("Heute ist der " +
-      new Date().toLocaleDateString("de-DE"));
+  else if (
+    command.includes("datum") ||
+    command.includes("welcher tag")
+  ) {
+    speak("Heute ist " +
+      new Date().toLocaleDateString("de-DE", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      }) + ".");
   }
 
   else if (command.includes("youtube")) {
     speak("Ich öffne YouTube.");
-    window.open("https://www.youtube.com", "_blank");
+    openPage("https://www.youtube.com");
   }
 
-  else if (command.includes("dein name")) {
-    speak("Mein Name ist JARVIS. Ihr persönlicher Assistent.");
+  else if (
+    command.includes("google") &&
+    (command.includes("suche") || command.includes("such"))
+  ) {
+    const query = command
+      .replace("jarvis", "")
+      .replace("google", "")
+      .replace("suche nach", "")
+      .replace("suche", "")
+      .trim();
+
+    if (query) {
+      speak("Ich suche nach " + query + ".");
+      openPage("https://www.google.com/search?q=" + encodeURIComponent(query));
+    } else {
+      speak("Wonach soll ich suchen?");
+    }
   }
 
-  else if (command.includes("hilfe")) {
-    speak("Du kannst mich nach der Uhrzeit und dem Datum fragen oder YouTube öffnen lassen.");
+  else if (command.includes("wetter")) {
+    speak("Ich öffne die Wettervorhersage.");
+    openPage("https://www.google.com/search?q=Wetter+heute");
+  }
+
+  else if (
+    command.includes("dein name") ||
+    command.includes("wer bist du")
+  ) {
+    speak("Mein Name ist JARVIS. Ich bin Ihr persönlicher digitaler Assistent.");
+  }
+
+  else if (
+    command.includes("wie geht es dir") ||
+    command.includes("wie gehts")
+  ) {
+    speak("Vielen Dank der Nachfrage. Alle meine Systeme funktionieren einwandfrei. Wie kann ich Ihnen helfen?");
+  }
+
+  else if (
+    command.includes("was kannst du") ||
+    command.includes("hilfe")
+  ) {
+    speak("Ich kann Ihnen die Uhrzeit und das Datum nennen, YouTube öffnen, im Internet suchen, das Wetter aufrufen und Berechnungen durchführen.");
+  }
+
+  else if (
+    command.includes("danke")
+  ) {
+    speak("Sehr gerne. Dafür bin ich da.");
+  }
+
+  else if (
+    command.includes("gute nacht") ||
+    command.includes("tschüss") ||
+    command.includes("auf wiedersehen")
+  ) {
+    speak("Auf Wiedersehen. Ich stehe jederzeit bereit.");
   }
 
   else {
-    speak("Diesen Befehl kenne ich noch nicht. Das KI-Modul wird später erweitert.");
+    const result = calculate(command);
+
+    if (result !== null) {
+      speak(result);
+    }
+
+    else {
+      speak("Diesen Befehl kenne ich noch nicht. Ich arbeite derzeit im lokalen Modus. Eine Verbindung zu einer echten KI ist noch nicht eingerichtet.");
+    }
   }
 }
 
 function sendCommand() {
-  const input = document.getElementById("command");
+  const value = input.value.trim();
 
-  if (!input.value.trim()) return;
+  if (!value) return;
 
-  processCommand(input.value);
   input.value = "";
+  processCommand(value);
 }
 
 function startListening() {
@@ -229,17 +484,28 @@ function startListening() {
     window.webkitSpeechRecognition;
 
   if (!Recognition) {
-    speak("Dein Browser unterstützt keine Spracherkennung.");
+    speak("Ihr Browser unterstützt leider keine Spracherkennung.");
     return;
   }
 
-  const recognition = new Recognition();
+  if (listening && recognition) {
+    recognition.stop();
+    return;
+  }
+
+  recognition = new Recognition();
 
   recognition.lang = "de-DE";
   recognition.continuous = false;
   recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
 
-  statusText.textContent = "ICH HÖRE ZU ...";
+  recognition.onstart = function() {
+    listening = true;
+    document.body.classList.add("listening");
+    statusText.textContent = "ICH HÖRE ZU...";
+    heard.textContent = "Warte auf Sprachbefehl...";
+  };
 
   recognition.onresult = function(event) {
     const text = event.results[0][0].transcript;
@@ -247,21 +513,37 @@ function startListening() {
     processCommand(text);
   };
 
-  recognition.onerror = function() {
-    statusText.textContent = "SPRACHERKENNUNG FEHLGESCHLAGEN";
+  recognition.onerror = function(event) {
+    statusText.textContent = "SPRACHFEHLER";
+
+    if (event.error === "not-allowed") {
+      speak("Bitte erlauben Sie den Mikrofonzugriff.");
+    } else if (event.error !== "no-speech") {
+      answer.textContent = "Spracherkennung fehlgeschlagen: " + event.error;
+    }
   };
 
   recognition.onend = function() {
+    listening = false;
+    document.body.classList.remove("listening");
     statusText.textContent = "SYSTEM ONLINE";
   };
 
-  recognition.start();
+  try {
+    recognition.start();
+  } catch (error) {
+    listening = false;
+    statusText.textContent = "SYSTEM ONLINE";
+    answer.textContent = "Die Spracherkennung konnte nicht gestartet werden.";
+  }
 }
 
-document.getElementById("command")
-  .addEventListener("keydown", function(event) {
-    if (event.key === "Enter") sendCommand();
-  });
+input.addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+    sendCommand();
+  }
+});
+
 </script>
 
 </body>
