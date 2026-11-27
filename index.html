@@ -217,6 +217,35 @@ function startListening() {
   recognition.start();
 }
 </script>
+function speak(text) {
+  answer.textContent = text;
+
+  if (!("speechSynthesis" in window)) return;
+
+  speechSynthesis.cancel();
+
+  const speech = new SpeechSynthesisUtterance(text);
+  speech.lang = "de-DE";
+  speech.rate = 0.96;
+  speech.pitch = 0.88;
+
+  const voices = speechSynthesis.getVoices();
+  const germanVoices = voices.filter(
+    voice => voice.lang.toLowerCase().startsWith("de")
+  );
+
+  const preferredVoice =
+    germanVoices.find(voice =>
+      /google|natural|premium/i.test(voice.name)
+    ) || germanVoices[0];
+
+  if (preferredVoice) {
+    speech.voice = preferredVoice;
+  }
+
+  speechSynthesis.speak(speech);
+}
+
 
 </body>
 </html>
